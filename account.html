@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - ShopHub</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/accessibility.css">
+    <style>
+        .account-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sidebar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar a {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #007bff;
+            color: white;
+        }
+
+        .account-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .wishlist-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 1rem;
+        }
+
+        .wishlist-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .wishlist-item-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .wishlist-item-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .wishlist-item-price {
+            color: #28a745;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .wishlist-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-add-to-cart,
+        .btn-remove {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-add-to-cart {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-add-to-cart:hover {
+            background: #0056b3;
+        }
+
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-remove:hover {
+            background: #c82333;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .clear-wishlist-btn {
+            background: #dc3545;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        .clear-wishlist-btn:hover {
+            background: #c82333;
+        }
+
+        @media (max-width: 768px) {
+            .account-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .sidebar a {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .wishlist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body role="application">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation Header -->
+    <header role="banner" class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <h1><a href="index.html" aria-label="ShopHub Home">🛍️ ShopHub</a></h1>
+            </div>
+            
+            <div class="search-container" role="search">
+                <input type="search" id="search-input" placeholder="Search products" aria-label="Search products" class="search-input">
+                <button class="search-btn" aria-label="Search"><span>🔍</span></button>
+            </div>
+
+            <nav role="navigation" aria-label="Main navigation" class="nav-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a></li>
+                    <li><a href="account.html" class="active">Account</a></li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">☰</button>
+        </div>
+
+        <div class="trust-banner" role="contentinfo">
+            <span>🔒 SSL Secured</span>
+            <span>✓ PCI-DSS Compliant</span>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <div class="account-container">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar" role="complementary" aria-label="Account menu">
+                <nav>
+                    <a href="#" onclick="showSection('profile')" class="nav-link active" data-section="profile">👤 Profile</a>
+                    <a href="#" onclick="showSection('wishlist')" class="nav-link" data-section="wishlist">❤️ My Wishlist</a>
+                    <a href="#" onclick="showSection('orders')" class="nav-link" data-section="orders">📦 My Orders</a>
+                    <a href="#" onclick="showSection('settings')" class="nav-link" data-section="settings">⚙️ Settings</a>
+                </nav>
+            </aside>
+
+            <!-- Content Area -->
+            <div class="account-content">
+                <!-- Profile Section -->
+                <section id="profile" class="section active" role="region" aria-label="Profile section">
+                    <h2>My Profile</h2>
+                    <div id="profile-content">
+                        <p>Loading profile information...</p>
+                    </div>
+                </section>
+
+                <!-- Wishlist Section -->
+                <section id="wishlist" class="section" role="region" aria-label="Wishlist section">
+                    <h2>❤️ My Wishlist</h2>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <p id="wishlist-count-text">Items in wishlist: <span id="wishlist-item-count">0</span></p>
+                        <button class="clear-wishlist-btn" onclick="clearWishlist()" id="clear-btn" style="display: none;">Clear All Wishlist Items</button>
+                    </div>
+
+                    <div id="wishlist-content">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">❤️</div>
+                            <p>Your wishlist is empty</p>
+                            <p style="font-size: 0.9rem; color: #999;">Start adding items to save them for later!</p>
+                            <a href="products.html" style="display: inline-block; margin-top: 1rem; padding: 0.75rem 1.5rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px;">Browse Products</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Orders Section -->
+                <section id="orders" class="section" role="region" aria-label="Orders section">
+                    <h2>📦 My Orders</h2>
+                    <div id="orders-content">
+                        <p>No orders yet</p>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings" class="section" role="region" aria-label="Settings section">
+                    <h2>⚙️ Settings</h2>
+                    <div id="settings-content">
+                        <p>Coming soon...</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 2rem; margin-top: 3rem;">
+        <p>&copy; 2026 ShopHub. All rights reserved. | 🔒 Secure & Trusted Shopping</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/wishlist.js"></script>
+</body>
+</html>

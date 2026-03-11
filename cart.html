@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - ShopHub</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/accessibility.css">
+</head>
+<body role="application">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation Header -->
+    <header role="banner" class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <h1><a href="index.html" aria-label="ShopHub Home">🛍️ ShopHub</a></h1>
+            </div>
+            
+            <nav role="navigation" aria-label="Main navigation" class="nav-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="cart.html" class="active">Cart</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">☰</button>
+        </div>
+
+        <div class="trust-banner" role="contentinfo">
+            <span>🔒 SSL Secured</span>
+            <span>✓ PCI-DSS Compliant</span>
+            <span>✓ 100% Safe Shopping</span>
+            <span>💰 Money Back Guarantee</span>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <div class="container">
+            <h1>🛒 Shopping Cart</h1>
+
+            <div id="cart-content" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 2rem;">
+                <!-- Cart Items -->
+                <section aria-label="Cart items">
+                    <div id="cart-items" role="list"></div>
+                </section>
+
+                <!-- Cart Summary -->
+                <section aria-label="Order summary">
+                    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <h2>Order Summary</h2>
+                        <div style="margin: 1.5rem 0;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">₹0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span>Tax (18%):</span>
+                                <span id="tax">₹0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span>Shipping:</span>
+                                <span id="shipping">₹99</span>
+                            </div>
+                            <hr>
+                            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem;">
+                                <span>Total:</span>
+                                <span id="total" style="color: var(--primary-color);">₹0</span>
+                            </div>
+                        </div>
+
+                        <button class="cta-button" style="width: 100%; margin-top: 1rem;" onclick="proceedToCheckout()" aria-label="Proceed to checkout">
+                            Proceed to Checkout →
+                        </button>
+
+                        <button style="width: 100%; margin-top: 0.5rem; padding: 0.8rem; background: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-weight: bold;" onclick="continueShopping()" aria-label="Continue shopping">
+                            Continue Shopping
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Empty Cart Message -->
+            <div id="empty-cart" style="display: none; text-align: center; padding: 3rem 0;">
+                <h2 style="font-size: 1.5rem; color: var(--text-light);">Your cart is empty</h2>
+                <p style="margin: 1rem 0 2rem;">Add products to get started</p>
+                <a href="products.html" class="cta-button" style="display: inline-block; text-decoration: none;">Browse Products</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo" class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Policies</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>📧 support@shophub.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ShopHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cart management
+        function displayCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItems = document.getElementById('cart-items');
+            const emptyCart = document.getElementById('empty-cart');
+            const cartContent = document.getElementById('cart-content');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '';
+                cartContent.style.display = 'none';
+                emptyCart.style.display = 'block';
+                return;
+            }
+
+            emptyCart.style.display = 'none';
+            cartContent.style.display = 'grid';
+
+            cartItems.innerHTML = cart.map(item => `
+                <div style="background: white; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; display: flex; gap: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 2rem;">${item.image}</div>
+                    <div style="flex: 1;">
+                        <h3 style="margin: 0;">${item.name}</h3>
+                        <p style="color: var(--text-light); margin: 0.5rem 0;">₹${item.price}</p>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})" style="padding: 0.3rem 0.6rem; background: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">-</button>
+                            <input type="number" value="${item.quantity}" style="width: 50px; padding: 0.3rem; border: 1px solid #ddd; border-radius: 4px;" readonly>
+                            <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})" style="padding: 0.3rem 0.6rem; background: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">+</button>
+                            <button onclick="removeFromCart('${item.id}')" style="margin-left: auto; padding: 0.3rem 0.8rem; background: var(--danger-color); color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-weight: bold; font-size: 1.1rem;">₹${item.quantity * item.price}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            updateSummary();
+        }
+
+        function updateQuantity(productId, quantity) {
+            if (quantity < 1) return;
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity = quantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCart();
+            }
+        }
+
+        function removeFromCart(productId) {
+            if (!confirm('Remove this item from cart?')) return;
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(i => String(i.id) !== String(productId));
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartBadge();
+            displayCart();
+        }
+
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badges = document.querySelectorAll('#cart-count');
+            badges.forEach(badge => badge.textContent = count);
+        }
+
+        function updateSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.18;
+            const shipping = subtotal < 500 ? 99 : 0;
+            const total = subtotal + tax + shipping;
+
+            document.getElementById('subtotal').textContent = '₹' + subtotal.toFixed(2);
+            document.getElementById('tax').textContent = '₹' + tax.toFixed(2);
+            document.getElementById('shipping').textContent = shipping > 0 ? '₹' + shipping.toFixed(2) : 'FREE';
+            document.getElementById('total').textContent = '₹' + total.toFixed(2);
+        }
+
+        function proceedToCheckout() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) {
+                alert('Cart is empty!');
+                return;
+            }
+            alert('🔒 Secure Checkout:\n\nSupported Payment Methods:\n- Credit/Debit Cards\n- UPI\n- Digital Wallets\n- Cash on Delivery\n\nThis would redirect to secure checkout in production.');
+        }
+
+        function continueShopping() {
+            window.location.href = 'products.html';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            displayCart();
+            updateCartBadge();
+        });
+    </script>
+</body>
+</html>

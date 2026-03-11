@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopHub - Your Trusted E-Commerce Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/accessibility.css">
+    <!-- Security & Trust Badges -->
+    <meta name="description" content="ShopHub - Secure, Scalable E-Commerce Platform for Fashion, Electronics, Groceries & Lifestyle Products">
+    <meta property="og:title" content="ShopHub - Trusted Shopping Experience">
+    <meta property="og:description" content="Shop with confidence: SSL Secure, PCI-DSS Compliant, 100% Customer Satisfaction">
+</head>
+<body role="application">
+    <!-- Skip to Main Content Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation Header -->
+    <header role="banner" class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <h1><a href="index.html" aria-label="ShopHub Home">🛍️ ShopHub</a></h1>
+            </div>
+            
+            <!-- Search Bar with AI-Powered Features -->
+            <div class="search-container" role="search">
+                <input 
+                    type="search" 
+                    id="search-input" 
+                    placeholder="Search products (typo-tolerant AI search)" 
+                    aria-label="Search products"
+                    class="search-input"
+                >
+                <button class="search-btn" aria-label="Search"><span>🔍</span></button>
+                <div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="Search suggestions"></div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav role="navigation" aria-label="Main navigation" class="nav-menu">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="#deals">Deals</a></li>
+                    <li><a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a></li>
+                    <li><a href="#wishlist" title="View saved items">❤️ Wishlist <span id="wishlist-count" class="cart-badge" style="display: none;">0</span></a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">☰</button>
+        </div>
+
+        <!-- Trust & Security Indicators -->
+        <div class="trust-banner" role="contentinfo">
+            <span aria-label="SSL Secured">🔒 SSL Secured</span>
+            <span aria-label="PCI DSS Compliant">✓ PCI-DSS Compliant</span>
+            <span aria-label="100% Safe Shopping">✓ 100% Safe Shopping</span>
+            <span aria-label="Money Back Guarantee">💰 Money Back Guarantee</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Hero Section -->
+        <section class="hero-section" role="region" aria-label="Featured promotions">
+            <div class="hero-content">
+                <h2>Welcome to ShopHub</h2>
+                <p>Your trusted platform for Fashion, Electronics, Groceries & Lifestyle</p>
+                <button class="cta-button" aria-label="Start shopping now">Start Shopping →</button>
+            </div>
+        </section>
+
+        <!-- Featured AI-Curated Products Section -->
+        <section class="featured-section" role="region" aria-label="Featured products">
+            <div class="container">
+                <h2>🎯 AI-Curated For You</h2>
+                <p class="section-description">Personalized product recommendations based on your preferences</p>
+                
+                <div class="products-grid" id="featured-products" role="list">
+                    <!-- Products will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Deals Section -->
+        <section class="deals-section" role="region" aria-label="Trending deals">
+            <div class="container">
+                <h2>⚡ Trending Deals Today</h2>
+                
+                <div class="deals-carousel" id="trending-deals" role="list">
+                    <!-- Deals will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Seasonal Campaigns -->
+        <section class="campaigns-section" role="region" aria-label="Seasonal campaigns">
+            <div class="container">
+                <h2>🎉 Seasonal Campaigns</h2>
+                <div class="campaigns-grid" id="campaigns">
+                    <!-- Campaigns will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Reviews & Social Proof -->
+        <section class="reviews-section" role="region" aria-label="Customer reviews">
+            <div class="container">
+                <h2>⭐ What Our Customers Say</h2>
+                <div class="reviews-grid" id="customer-reviews" role="list">
+                    <!-- Reviews will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- WINNING FEATURE: Live Purchase Notifications -->
+        <section style="background: #f8f9fa; padding: 1.5rem 1rem; text-align: center;">
+            <div class="container">
+                <h3 style="margin: 0 0 1rem 0; color: #333;">🔔 Live Activity</h3>
+                <div id="live-notification-badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.8rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600; font-size: 0.95rem;">
+                    <span style="animation: pulse 1s infinite;">●</span> Connecting to live updates...
+                </div>
+            </div>
+        </section>
+
+        <!-- WINNING FEATURE: Editor's Choice / Expert Picks -->
+        <section style="padding: 3rem 1rem; background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem;">⭐ Editor's Choice - Our Top Picks</h2>
+                <div id="expert-picks" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem;">
+                    <!-- Expert picks will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- WINNING FEATURE: Why Choose Us -->
+        <section style="padding: 3rem 1rem;">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem;">🏆 Why Choose Us</h2>
+                <div id="winner-features">
+                    <!-- Features will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Return & Refund Policy -->
+        <section class="policies-section" role="region" aria-label="Return and refund policies">
+            <div class="container">
+                <h2>📋 Our Policies</h2>
+                <div class="policies-grid">
+                    <div class="policy-card">
+                        <h3>30-Day Returns</h3>
+                        <p>Easy return process within 30 days of purchase with no questions asked</p>
+                    </div>
+                    <div class="policy-card">
+                        <h3>Full Refunds</h3>
+                        <p>Get 100% refund if product doesn't meet your expectations</p>
+                    </div>
+                    <div class="policy-card">
+                        <h3>Fast Cancellations</h3>
+                        <p>Cancel orders before shipping for instant refunds</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loyalty & Subscription Section -->
+        <section class="loyalty-section" role="region" aria-label="Loyalty program">
+            <div class="container">
+                <h2>💎 Premium Membership</h2>
+                <p>Join our loyalty program and get exclusive benefits</p>
+                <button class="membership-btn" aria-label="Learn more about premium membership">Become Premium Member</button>
+            </div>
+        </section>
+
+        <!-- Deals Section -->
+        <section class="deals-section" role="region" aria-label="Special deals" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 3rem 1rem; margin: 3rem 0;">
+            <div class="container">
+                <h2 style="color: white; text-align: center; margin-bottom: 2rem; font-size: 2rem;">⚡ LIGHTNING DEALS - LIMITED TIME ONLY ⚡</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transform: translateY(0); transition: transform 0.3s;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎧</div>
+                        <h3>Sony Headphones</h3>
+                        <p style="color: #f5576c; font-weight: bold;">Save ₹11,000</p>
+                        <p style="font-size: 0.9rem; color: #666;">₹18,999</p>
+                        <p style="color: #e74c3c; font-weight: bold; margin-top: 0.5rem;">🔥 Ends in 2 hours!</p>
+                    </div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transform: translateY(0); transition: transform 0.3s;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">👟</div>
+                        <h3>Nike Running Shoes</h3>
+                        <p style="color: #f5576c; font-weight: bold;">Save ₹6,000</p>
+                        <p style="font-size: 0.9rem; color: #666;">₹7,999</p>
+                        <p style="color: #e74c3c; font-weight: bold; margin-top: 0.5rem;">🔥 Limited Stock!</p>
+                    </div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transform: translateY(0); transition: transform 0.3s;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📺</div>
+                        <h3>Samsung 65" TV</h3>
+                        <p style="color: #f5576c; font-weight: bold;">Save ₹30,000</p>
+                        <p style="font-size: 0.9rem; color: #666;">₹49,999</p>
+                        <p style="color: #e74c3c; font-weight: bold; margin-top: 0.5rem;">🔥 Only 12 Left!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Brands Section -->
+        <section class="brands-section" style="padding: 3rem 1rem; background: #f8f9fa;">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Featured Brands</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; text-align: center;">
+                    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏷️</div>
+                        <p style="font-weight: 600;">Sony</p>
+                        <p style="color: #999; font-size: 0.85rem;">Premium Electronics</p>
+                    </div>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">👟</div>
+                        <p style="font-weight: 600;">Nike</p>
+                        <p style="color: #999; font-size: 0.85rem;">Sports & Fashion</p>
+                    </div>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍎</div>
+                        <p style="font-weight: 600;">Apple</p>
+                        <p style="color: #999; font-size: 0.85rem;">Tech Lifestyle</p>
+                    </div>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌿</div>
+                        <p style="font-weight: 600;">Organic Brands</p>
+                        <p style="color: #999; font-size: 0.85rem;">Health & Wellness</p>
+                    </div>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">👔</div>
+                        <p style="font-weight: 600;">Ray-Ban</p>
+                        <p style="color: #999; font-size: 0.85rem;">Fashion Eyewear</p>
+                    </div>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔊</div>
+                        <p style="font-weight: 600;">JBL</p>
+                        <p style="color: #999; font-size: 0.85rem;">Audio Equipment</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support & Chat Section -->
+        <section class="support-section" role="region" aria-label="Customer support">
+            <div class="container">
+                <h2>💬 24/7 Support</h2>
+                <button id="chat-btn" class="chat-btn" aria-label="Open customer support chat">
+                    Chat with Us 💬
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo" class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Service</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Policies</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Data Protection</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Payment Methods</h4>
+                <p>💳 Cards | 📱 UPI | 💰 Wallets | 🚚 Cash on Delivery</p>
+            </div>
+            <div class="footer-section">
+                <h4>Languages</h4>
+                <select id="language-selector" aria-label="Select language">
+                    <option value="en">English</option>
+                    <option value="hi">हिंदी</option>
+                    <option value="es">Español</option>
+                </select>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ShopHub. All rights reserved. | SSL Secure | GDPR Compliant</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/accessibility.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/recommendations.js"></script>
+
+    <!-- 3D Chatbot Widget -->
+    <div id="chat-widget" style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 999;
+        font-family: Arial, sans-serif;
+    ">
+        <!-- Chat Toggle Button -->
+        <button id="chat-toggle" onclick="toggleChat()" style="
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: chatbounce 2s infinite;
+        " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            🤖
+        </button>
+        
+        <!-- Chat Window -->
+        <div id="chat-window" style="
+            display: none;
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 380px;
+            max-height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: slideup 0.3s ease-out;
+        ">
+            <!-- Chat Header -->
+            <div style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            ">
+                <div>
+                    <h3 style="margin: 0; font-size: 18px; font-weight: bold;">ShopHub Assistant</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.9;">🟢 Always Online</p>
+                </div>
+                <button onclick="toggleChat()" style="
+                    background: white;
+                    color: #667eea;
+                    border: none;
+                    border-radius: 50%;
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                    font-size: 18px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">✕</button>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div style="
+                padding: 20px;
+                height: 300px;
+                overflow-y: auto;
+                background: #f9f9f9;
+            ">
+                <div style="
+                    background: white;
+                    padding: 12px;
+                    border-radius: 10px;
+                    margin-bottom: 10px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                ">
+                    <p style="margin: 0; color: #333; font-size: 14px;">
+                        👋 Hello! Welcome to ShopHub. How can I assist you today?
+                    </p>
+                </div>
+                
+                <div style="
+                    background: white;
+                    padding: 12px;
+                    border-radius: 10px;
+                    margin-bottom: 10px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                ">
+                    <p style="margin: 0; color: #333; font-size: 14px;">
+                        I can help you with:
+                    </p>
+                    <ul style="margin: 8px 0 0 0; padding-left: 20px; color: #667eea;">
+                        <li>🛍️ Product Information</li>
+                        <li>💳 Checkout Support</li>
+                        <li>📦 Order Tracking</li>
+                        <li>❓ FAQs</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Chat Input -->
+            <div style="
+                padding: 15px;
+                border-top: 1px solid #e0e0e0;
+                background: white;
+                display: flex;
+                gap: 8px;
+            ">
+                <input type="text" id="chat-input" placeholder="Type your message..." style="
+                    flex: 1;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 20px;
+                    font-size: 14px;
+                    outline: none;
+                " onkeypress="if(event.key==='Enter') sendMessage()">
+                <button onclick="sendMessage()" style="
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    border: none;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    cursor: pointer;
+                    font-size: 18px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Styles & Scripts -->
+    <style>
+        @keyframes chatbounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes slideup {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        #chat-input:focus {
+            border-color: #667eea !important;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    </style>
+
+    <script>
+        function toggleChat() {
+            var chatWindow = document.getElementById('chat-window');
+            var chatToggle = document.getElementById('chat-toggle');
+            
+            if (chatWindow.style.display === 'none') {
+                chatWindow.style.display = 'block';
+                chatToggle.style.animation = 'none';
+                document.getElementById('chat-input').focus();
+            } else {
+                chatWindow.style.display = 'none';
+                chatToggle.style.animation = 'chatbounce 2s infinite';
+            }
+        }
+        
+        function sendMessage() {
+            var input = document.getElementById('chat-input');
+            var message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message
+            var chatMessages = document.querySelector('#chat-window > div:nth-child(2)');
+            var userMsg = document.createElement('div');
+            userMsg.style.cssText = `
+                background: #667eea;
+                color: white;
+                padding: 12px;
+                border-radius: 10px;
+                margin-bottom: 10px;
+                text-align: right;
+                max-width: 80%;
+                margin-left: auto;
+            `;
+            userMsg.innerHTML = '<p style="margin: 0; font-size: 14px;">' + message + '</p>';
+            chatMessages.appendChild(userMsg);
+            
+            // Clear input
+            input.value = '';
+            
+            // Auto-reply after 1 second
+            setTimeout(function() {
+                var replies = [
+                    '✨ Thanks for your message! Our team will respond shortly.',
+                    '👍 Got it! Is there anything else I can help with?',
+                    '🎉 Great question! Check our FAQ section or contact support.',
+                    '💡 I understand! Our support team is here 24/7.',
+                    '🚀 Awesome! Feel free to browse our products.'
+                ];
+                
+                var randomReply = replies[Math.floor(Math.random() * replies.length)];
+                var botMsg = document.createElement('div');
+                botMsg.style.cssText = `
+                    background: white;
+                    color: #333;
+                    padding: 12px;
+                    border-radius: 10px;
+                    margin-bottom: 10px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                `;
+                botMsg.innerHTML = '<p style="margin: 0; font-size: 14px;">' + randomReply + '</p>';
+                chatMessages.appendChild(botMsg);
+                chatMessages.parentElement.scrollTop = chatMessages.parentElement.scrollHeight;
+            }, 1000);
+            
+            // Scroll to bottom
+            var scrollable = document.querySelector('#chat-window > div:nth-child(2)');
+            scrollable.scrollTop = scrollable.scrollHeight;
+        }
+    </script>
+</body>
+</html>
