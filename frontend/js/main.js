@@ -282,7 +282,7 @@ class ECommerceApp {
         if (!container) return;
 
         const featured = this.products.slice(0, 4);
-        container.innerHTML = featured.map(product => this.createProductCard(product)).join('');
+        container.innerHTML = featured.map(product => this.createProductCard(product, true)).join('');
         this.attachProductCardListeners();
     }
 
@@ -370,7 +370,9 @@ class ECommerceApp {
         `).join('');
     }
 
-    createProductCard(product) {
+    createProductCard(product, forceStringId = false) {
+        // Always pass product.id as a string in onclick
+        const idStr = `'${String(product.id)}'`;
         return `
             <div class="product-card" role="listitem" tabindex="0">
                 <div class="product-image">${product.image}</div>
@@ -384,13 +386,13 @@ class ECommerceApp {
                         </span>
                     </div>
                     <div class="product-price">
-                        <span class="original-price">₹${product.originalPrice}</span>
+                        <span class="original-price">₹${product.original_price}</span>
                         <span class="current-price">₹${product.price}</span>
                         <span class="discount-badge">${product.discount}% OFF</span>
                     </div>
                     <button 
                         class="add-to-cart-btn" 
-                        onclick="app.addToCart(${product.id})"
+                        onclick="app.addToCart(${idStr})"
                         aria-label="Add ${product.name} to shopping cart"
                     >
                         🛒 Add to Cart
@@ -413,13 +415,15 @@ class ECommerceApp {
     }
 
     addToCart(productId) {
-        const product = this.products.find(p => p.id === productId);
+        // Always treat productId as string for cart consistency
+        const pid = String(productId);
+        const product = this.products.find(p => String(p.id) === pid);
         if (product) {
-            const existingItem = this.cart.find(item => item.id === productId);
+            const existingItem = this.cart.find(item => String(item.id) === pid);
             if (existingItem) {
                 existingItem.quantity++;
             } else {
-                this.cart.push({ ...product, quantity: 1 });
+                this.cart.push({ ...product, id: pid, quantity: 1 });
             }
             this.updateCartCount();
             this.showNotification(`${product.name} added to cart!`, 'success');
@@ -485,7 +489,7 @@ class ECommerceApp {
 let app;
 document.addEventListener('DOMContentLoaded', () => {
     app = new ECommerceApp();
-    
+    window.app = app; // Make app globally accessible for inline event handlers
     // Load cart from localStorage
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
