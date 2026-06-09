@@ -6,7 +6,7 @@ Main Flask Application for handling API requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import os
 from dotenv import load_dotenv
 import logging
@@ -16,8 +16,14 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# Use absolute path for database to avoid instance/ confusion
+basedir = os.path.abspath(os.path.dirname(__file__))
+db_path = os.path.join(basedir, 'ecommerce.db')
+
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-here')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///ecommerce.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f'sqlite:///{db_path}')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'jwt-secret-key')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=30)
 
@@ -51,7 +57,7 @@ app.register_blueprint(wishlist.bp)
 def health_check():
     return jsonify({
         'status': 'healthy',
-        'timestamp': datetime.utcnow().isoformat(),
+        'timestamp': datetime.now(timezone.utc).isoformat(),
         'version': '1.0.0'
     }), 200
 
@@ -78,7 +84,18 @@ def forbidden(error):
 def init_db():
     with app.app_context():
         db.create_all()
-        logger.info('Database initialized')
+        logger.info('Database tables created')
+
+        # Auto-seed sample data if database is empty
+        product_count = Product.query.count()
+        if product_count == 0:
+            logger.info('Database is empty — seeding sample data...')
+            from sample_data import init_sample_products, init_sample_users
+            init_sample_products()
+            init_sample_users()
+            logger.info('Sample data seeded successfully')
+        else:
+            logger.info(f'Database already has {product_count} products — skipping seed')
 
 if __name__ == '__main__':
     init_db()

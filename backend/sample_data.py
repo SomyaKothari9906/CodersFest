@@ -3,7 +3,17 @@ Sample Data for E-Commerce Platform
 This file contains functions to populate the database with sample products and users
 """
 
+import re
 from models.database import db, Product, User, Review
+
+
+def generate_slug(name):
+    """Generate a URL-friendly slug from a product name"""
+    slug = name.lower().strip()
+    slug = re.sub(r'[^\w\s-]', '', slug)
+    slug = re.sub(r'[\s_]+', '-', slug)
+    slug = re.sub(r'-+', '-', slug)
+    return slug
 
 def init_sample_products():
     """Initialize database with sample products"""
@@ -19,8 +29,8 @@ def init_sample_products():
             'discount_percentage': 37,
             'stock': 45,
             'sku': 'SONY-WH1000XM5-001',
-            'rating': 4.8,
-            'reviews_count': 2450
+            'average_rating': 4.8,
+            'total_reviews': 2450
         },
         {
             'name': 'Apple Watch Series 8',
@@ -32,8 +42,8 @@ def init_sample_products():
             'discount_percentage': 17,
             'stock': 28,
             'sku': 'APPLE-WATCH-S8-001',
-            'rating': 4.6,
-            'reviews_count': 5200
+            'average_rating': 4.6,
+            'total_reviews': 5200
         },
         {
             'name': 'Samsung 65" 4K Smart TV',
@@ -45,8 +55,8 @@ def init_sample_products():
             'discount_percentage': 37,
             'stock': 12,
             'sku': 'SAMSUNG-65TV-001',
-            'rating': 4.6,
-            'reviews_count': 890
+            'average_rating': 4.6,
+            'total_reviews': 890
         },
         {
             'name': 'Premium Cotton T-Shirt',
@@ -58,8 +68,8 @@ def init_sample_products():
             'discount_percentage': 55,
             'stock': 120,
             'sku': 'FASHION-TSHIRT-001',
-            'rating': 4.5,
-            'reviews_count': 1856
+            'average_rating': 4.5,
+            'total_reviews': 1856
         },
         {
             'name': 'Ray-Ban Aviator Sunglasses',
@@ -71,8 +81,8 @@ def init_sample_products():
             'discount_percentage': 50,
             'stock': 35,
             'sku': 'RAYBAN-AVIATOR-001',
-            'rating': 4.7,
-            'reviews_count': 1945
+            'average_rating': 4.7,
+            'total_reviews': 1945
         },
         {
             'name': 'Nike Running Shoes',
@@ -84,8 +94,8 @@ def init_sample_products():
             'discount_percentage': 43,
             'stock': 89,
             'sku': 'NIKE-RUNNING-001',
-            'rating': 4.7,
-            'reviews_count': 4200
+            'average_rating': 4.7,
+            'total_reviews': 4200
         },
         {
             'name': 'Denim Jeans - Premium Fit',
@@ -97,8 +107,8 @@ def init_sample_products():
             'discount_percentage': 50,
             'stock': 75,
             'sku': 'FASHION-JEANS-001',
-            'rating': 4.5,
-            'reviews_count': 2100
+            'average_rating': 4.5,
+            'total_reviews': 2100
         },
         {
             'name': 'Arabica Coffee Beans 500g',
@@ -110,8 +120,8 @@ def init_sample_products():
             'discount_percentage': 43,
             'stock': 156,
             'sku': 'GROCERY-COFFEE-001',
-            'rating': 4.9,
-            'reviews_count': 3200
+            'average_rating': 4.9,
+            'total_reviews': 3200
         },
         {
             'name': 'Organic Honey 500ml',
@@ -123,8 +133,8 @@ def init_sample_products():
             'discount_percentage': 42,
             'stock': 134,
             'sku': 'GROCERY-HONEY-001',
-            'rating': 4.9,
-            'reviews_count': 2800
+            'average_rating': 4.9,
+            'total_reviews': 2800
         },
         {
             'name': 'Premium Yoga Mat 6mm',
@@ -136,8 +146,8 @@ def init_sample_products():
             'discount_percentage': 44,
             'stock': 91,
             'sku': 'LIFESTYLE-YOGAMAT-001',
-            'rating': 4.8,
-            'reviews_count': 2800
+            'average_rating': 4.8,
+            'total_reviews': 2800
         },
         {
             'name': 'Meditation Cushion',
@@ -149,8 +159,8 @@ def init_sample_products():
             'discount_percentage': 45,
             'stock': 56,
             'sku': 'LIFESTYLE-CUSHION-001',
-            'rating': 4.7,
-            'reviews_count': 1545
+            'average_rating': 4.7,
+            'total_reviews': 1545
         },
         {
             'name': 'Fitness Tracker Band',
@@ -162,8 +172,8 @@ def init_sample_products():
             'discount_percentage': 50,
             'stock': 67,
             'sku': 'ELECTRONICS-TRACKER-001',
-            'rating': 4.4,
-            'reviews_count': 1500
+            'average_rating': 4.4,
+            'total_reviews': 1500
         },
         {
             'name': 'JBL Flip 6 Speaker',
@@ -175,8 +185,8 @@ def init_sample_products():
             'discount_percentage': 30,
             'stock': 52,
             'sku': 'JBL-FLIP6-001',
-            'rating': 4.5,
-            'reviews_count': 3100
+            'average_rating': 4.5,
+            'total_reviews': 3100
         },
         {
             'name': 'Almond Butter 250g',
@@ -188,8 +198,8 @@ def init_sample_products():
             'discount_percentage': 40,
             'stock': 78,
             'sku': 'GROCERY-ALMOND-001',
-            'rating': 4.8,
-            'reviews_count': 1902
+            'average_rating': 4.8,
+            'total_reviews': 1902
         },
         {
             'name': 'Essential Oil Set 12pc',
@@ -201,8 +211,8 @@ def init_sample_products():
             'discount_percentage': 48,
             'stock': 102,
             'sku': 'LIFESTYLE-OILS-001',
-            'rating': 4.6,
-            'reviews_count': 2012
+            'average_rating': 4.6,
+            'total_reviews': 2012
         }
     ]
     
@@ -212,6 +222,7 @@ def init_sample_products():
         if not existing:
             product = Product(
                 name=product_data['name'],
+                slug=generate_slug(product_data['name']),
                 category=product_data['category'],
                 subcategory=product_data['subcategory'],
                 description=product_data['description'],
@@ -219,12 +230,14 @@ def init_sample_products():
                 original_price=product_data['original_price'],
                 discount_percentage=product_data['discount_percentage'],
                 stock=product_data['stock'],
-                sku=product_data['sku']
+                sku=product_data['sku'],
+                average_rating=product_data.get('average_rating', 0.0),
+                total_reviews=product_data.get('total_reviews', 0)
             )
             db.session.add(product)
     
     db.session.commit()
-    print("✓ Sample products initialized successfully!")
+    print("[OK] Sample products initialized successfully!")
 
 
 def init_sample_users():
@@ -279,7 +292,7 @@ def init_sample_users():
             db.session.add(user)
     
     db.session.commit()
-    print("✓ Sample users initialized successfully!")
+    print("[OK] Sample users initialized successfully!")
 
 
 def initialize_all_data():
@@ -287,7 +300,7 @@ def initialize_all_data():
     try:
         init_sample_products()
         init_sample_users()
-        print("\n✅ All sample data initialized successfully!")
+        print("\n[OK] All sample data initialized successfully!")
     except Exception as e:
-        print(f"\n❌ Error initializing sample data: {str(e)}")
+        print(f"\n[ERROR] Error initializing sample data: {str(e)}")
         db.session.rollback()

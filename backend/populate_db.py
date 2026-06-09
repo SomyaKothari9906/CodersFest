@@ -20,7 +20,7 @@ def populate_database():
         
         # Create all tables
         db.create_all()
-        print("✓ Database tables created")
+        print("[OK] Database tables created")
         
         # Add sample products
         print("\nAdding sample products...")
