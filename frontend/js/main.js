@@ -189,7 +189,7 @@ class ECommerceApp {
 
     loadProducts() {
         // Fetch products from backend API
-        const API_URL = 'http://localhost:5000/api';
+        const API_URL = 'http://127.0.0.1:5000/api';
         
         fetch(`${API_URL}/products?page=1&per_page=50`)
             .then(response => response.json())
